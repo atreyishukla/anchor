@@ -82,14 +82,14 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 					<div className='font-primary bg-secondary flex gap-2 justify-center'>
 						<div className={`${baseClass} bg-green-500 hover:bg-green-600`}>
 							<UserCheck size={20} className='mr-2' />
-							Connected
+							Linked
 						</div>
 						<button
 							className={`${baseClass} bg-red-500 hover:bg-red-600 text-sm`}
 							onClick={() => removeConnection(userData._id)}
 						>
 							<X size={20} className='mr-2' />
-							Remove Connection
+							Remove Link
 						</button>
 					</div>
 				);
@@ -126,7 +126,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 						className='bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded-full transition duration-300 flex items-center justify-center'
 					>
 						<UserPlus size={20} className='mr-2' />
-						Connect
+						Link
 					</button>
 				);
 		}
