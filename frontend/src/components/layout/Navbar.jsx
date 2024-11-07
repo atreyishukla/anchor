@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../../lib/axios";
 import { Link } from "react-router-dom";
-import { Bell, User, Users, LogOutIcon, TreePalm} from "lucide-react";
+import { Bell, User, Users, LogOutIcon, MessageCircle, TreePalm, Microscope} from "lucide-react";
 import { useState } from "react";
 import ThemeToggle from "../themeToggle";
 
@@ -72,8 +72,11 @@ const Navbar = () => {
                 <Link to={`/profile/${authUser.username}`} className="text-neutral flex flex-col items-center">
                   <User color={iconColor} size={20} />
                 </Link>
+                <Link to={`/chat`} className="text-neutral flex flex-col items-center">
+                  <MessageCircle color={iconColor} size={20} />
+                </Link>
                 <Link to="https://arnavvashisthcodingaccountnew.github.io/TwinModel/" >
-                  <TreePalm color={iconColor} size={20} />
+                  <Microscope color={iconColor} size={20} />
                 </Link>
                 <button
 									className='flex items-center space-x-1 text-sm text-Tcolor'
