@@ -15,7 +15,7 @@ const RecommendedUser = ({ user }) => {
 	const { mutate: sendConnectionRequest } = useMutation({
 		mutationFn: (userId) => axiosInstance.post(`/connections/request/${userId}`),
 		onSuccess: () => {
-			toast.success("Connection request sent successfully");
+			toast.success("Link request sent successfully");
 			queryClient.invalidateQueries({ queryKey: ["connectionStatus", user._id] });
 		},
 		onError: (error) => {
@@ -26,7 +26,7 @@ const RecommendedUser = ({ user }) => {
 	const { mutate: acceptRequest } = useMutation({
 		mutationFn: (requestId) => axiosInstance.put(`/connections/accept/${requestId}`),
 		onSuccess: () => {
-			toast.success("Connection request accepted");
+			toast.success("Link request accepted");
 			queryClient.invalidateQueries({ queryKey: ["connectionStatus", user._id] });
 		},
 		onError: (error) => {
@@ -37,7 +37,7 @@ const RecommendedUser = ({ user }) => {
 	const { mutate: rejectRequest } = useMutation({
 		mutationFn: (requestId) => axiosInstance.put(`/connections/reject/${requestId}`),
 		onSuccess: () => {
-			toast.success("Connection request rejected");
+			toast.success("Link request rejected");
 			queryClient.invalidateQueries({ queryKey: ["connectionStatus", user._id] });
 		},
 		onError: (error) => {
