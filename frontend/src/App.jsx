@@ -12,7 +12,7 @@ import NotificationsPage from "./pages/NotificationsPage";
 import NetworkPage from "./pages/NetworkPage";
 import PostPage from "./pages/PostPage";
 import ProfilePage from "./pages/ProfilePage";
-import ChatPagw from "./pages/ChatPage";
+import ChatPage from "./pages/ChatPage";
 
 function App() {
 	const { data: authUser, isLoading } = useQuery({
