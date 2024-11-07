@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Flex, Input} from '@chakra-ui/react'
+import { Box, Button, Flex, Input, Skeleton, SkeletonCircle, Text, useColorModeValue } from "@chakra-ui/react";
 import { Search } from 'lucide-react'
 const ChatPage = () => {
   return (
