@@ -82,14 +82,14 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 					<div className='font-primary bg-secondary flex gap-2 justify-center'>
 						<div className={`${baseClass} bg-green-500 hover:bg-green-600`}>
 							<UserCheck size={20} className='mr-2' />
-							Connected
+							Linked
 						</div>
 						<button
 							className={`${baseClass} bg-red-500 hover:bg-red-600 text-sm`}
 							onClick={() => removeConnection(userData._id)}
 						>
 							<X size={20} className='mr-2' />
-							Remove Connection
+							Remove Link
 						</button>
 					</div>
 				);
@@ -126,7 +126,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 						className='bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded-full transition duration-300 flex items-center justify-center'
 					>
 						<UserPlus size={20} className='mr-2' />
-						Connect
+						Link
 					</button>
 				);
 		}
@@ -209,14 +209,14 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 							type='text'
 							value={editedData.headline ?? userData.headline}
 							onChange={(e) => setEditedData({ ...editedData, headline: e.target.value })}
-							className='text-gray-600 text-center w-full'
+							className='text-info text-center w-full'
 						/>
 					) : (
-						<p className='text-gray-600'>{userData.headline}</p>
+						<p className='text-info'>{userData.headline}</p>
 					)}
 
 					<div className='flex justify-center items-center mt-2'>
-						<MapPin size={16} className='text-gray-500 mr-1' />
+						<MapPin size={16} className='text-info mr-1' />
 						{isEditing ? (
 							<input
 								type='text'
@@ -225,7 +225,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 								className='text-gray-600 text-center'
 							/>
 						) : (
-							<span className='text-gray-600'>{userData.location}</span>
+							<span className='text-info'>{userData.location}</span>
 						)}
 					</div>
 				</div>

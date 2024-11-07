@@ -89,7 +89,7 @@ const RecommendedUser = ({ user }) => {
 						disabled
 					>
 						<UserCheck size={16} className='mr-1' />
-						Connected
+						Linked
 					</button>
 				);
 			default:
@@ -99,7 +99,7 @@ const RecommendedUser = ({ user }) => {
 						onClick={handleConnect}
 					>
 						<UserPlus size={16} className='mr-1' />
-						Connect
+						Link
 					</button>
 				);
 		}
