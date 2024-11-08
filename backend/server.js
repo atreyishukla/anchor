@@ -10,11 +10,11 @@ import {connectDB} from "./lib/db.js"
 import cookieParser from "cookie-parser";
 import path from "path"
 dotenv.config();
-
+const Stripe = require("stripe");
 const app=express();
 const PORT = process.env.PORT || 5003;
 const __dirname = path.resolve();
-
+const stripe = Stripe("sk_test_51QIvGEKKDaEXrAi5WZNgdQdTHEjZlGjHEeXarEEed8Q6pFVJJvh8TD4eOlfkb2eoXOJ8bi73514W5wHNh36QyhZx00itUxWnl3");
 if (process.env.NODE_ENV !== "production") {
 	app.use(
 		cors({
@@ -40,7 +40,20 @@ if (process.env.NODE_ENV === "production") {
 		res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
 	});
 }
-
+app.post("/create-payment-intent", async (req, res) => {
+	try {
+	  const { amount } = req.body; // amount should be in cents (e.g., $10.00 is 1000 cents)
+	  const paymentIntent = await stripe.paymentIntents.create({
+		amount,
+		currency: "usd",
+		payment_method_types: ["card"],
+	  });
+	  res.send({ clientSecret: paymentIntent.client_secret });
+	} catch (error) {
+	  res.status(400).send({ error: error.message });
+	}
+  });
+  
 
 app.listen(PORT, () =>{
     console.log(`Server running on port ${PORT}`);
