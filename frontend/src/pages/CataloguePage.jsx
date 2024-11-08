@@ -21,7 +21,7 @@ const CreatureCard = ({ creature }) => {
   const { name, image, description, dangerLevel, lastSeen, primaryLocations } = creature;
 
   return (
-    <div className="font=priamry max-w-6xl mx-auto space-y-4">
+    <div className="font-priamry max-w-6xl mx-auto space-y-4">
       {/* Top section with image and description */}
       <div className="grid grid-cols-2 gap-4">
         {/* Left side - Image and title */}
@@ -49,29 +49,29 @@ const CreatureCard = ({ creature }) => {
       <div className="grid grid-cols-3 gap-4">
         {/* Danger Level */}
         <div className="bg-accent rounded-2xl p-6">
-          <h2 className="text-info text-2xl font-bold mb-4">
+          <h2 className="text-primary text-2xl font-bold mb-4">
             Danger<br />Level
           </h2>
-          <div className="text-primary flex text-2xl">
+          <div className="text-info flex text-2xl">
             {'★'.repeat(dangerLevel)}{'☆'.repeat(5 - dangerLevel)}
           </div>
         </div>
 
         {/* Last Seen */}
-        <div className="bg-accent text-info rounded-2xl p-6">
-          <h2 className="text-2xl font-bold mb-4">
+        <div className="bg-accent rounded-2xl p-6">
+          <h2 className="text-2xl  text-primary font-bold mb-4">
             Last<br />Seen
           </h2>
-          <p className="font-bold">{lastSeen.time}</p>
-          <p className="mt-2 text-sm">{lastSeen.location}</p>
+          <p className="font-bold text-info">{lastSeen.time}</p>
+          <p className="mt-2 text-sm text-info">{lastSeen.location}</p>
         </div>
 
         {/* Primary Locations */}
-        <div className="bg-accent text-info rounded-2xl p-6">
-          <h2 className="text-2xl font-bold mb-4">
+        <div className="bg-accent rounded-2xl p-6">
+          <h2 className="text-2xl text-primary font-bold mb-4">
             Primary<br />Locations
           </h2>
-          <ul className="space-y-1">
+          <ul className="space-y-1 text-info">
             {primaryLocations.map((location, index) => (
               <li key={index}>{location}</li>
             ))}
@@ -84,7 +84,7 @@ const CreatureCard = ({ creature }) => {
 
 const CataloguePage = () => {
   return (
-    <div className="min-h-screen bg-secondary p-8">
+    <div className="min-h-screen bg-base-100 p-8">
       {/* Map through creatures */}
       {creatures.map(creature => (
         <CreatureCard key={creature.id} creature={creature} />
