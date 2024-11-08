@@ -10,7 +10,7 @@ import {connectDB} from "./lib/db.js"
 import cookieParser from "cookie-parser";
 import path from "path"
 dotenv.config();
-const Stripe = require("stripe");
+
 const app=express();
 const PORT = process.env.PORT || 5003;
 const __dirname = path.resolve();
