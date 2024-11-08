@@ -21,7 +21,7 @@ const CreatureCard = ({ creature }) => {
   const { name, image, description, dangerLevel, lastSeen, primaryLocations } = creature;
 
   return (
-    <div className="font=priamry max-w-6xl mx-auto space-y-4 bg-secondary">
+    <div className="font=priamry max-w-6xl mx-auto space-y-4">
       {/* Top section with image and description */}
       <div className="grid grid-cols-2 gap-4">
         {/* Left side - Image and title */}
@@ -32,7 +32,7 @@ const CreatureCard = ({ creature }) => {
             className="w-full h-full object-cover opacity-90"
           />
           <div className="absolute bottom-6 left-6">
-            <h1 className="text-4xl font-bold text-accent">
+            <h1 className="text-primary text-4xl font-bold">
               The<br />
               <span className="text-primary">{name}</span>
             </h1>
