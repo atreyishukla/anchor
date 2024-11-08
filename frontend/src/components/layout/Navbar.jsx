@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../../lib/axios";
 import { Link } from "react-router-dom";
-import { Bell, User, Users, LogOutIcon, Microscope, Album} from "lucide-react";
+import { Bell, User, Users, LogOutIcon, Microscope, Album, Video} from "lucide-react";
 import { useState } from "react";
 import ThemeToggle from "../themeToggle";
 
@@ -77,6 +77,9 @@ const Navbar = () => {
                 </Link>
                 <Link to={`/twinmodel`} >
                   <Microscope color={iconColor} size={20} />
+                </Link>
+                <Link to={`/objectdetection`} >
+                  <Video color={iconColor} size={20} />
                 </Link>
                 <button
 									className='flex items-center space-x-1 text-sm text-Tcolor'

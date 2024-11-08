@@ -14,6 +14,8 @@ import PostPage from "./pages/PostPage";
 import ProfilePage from "./pages/ProfilePage";
 import CataloguePage from "./pages/CataloguePage";
 import MarineEcosystemSimulation from "./pages/TwinModel"
+import ObjectDetection from './pages/ObjectDetection';
+
 function App() {
 	const { data: authUser, isLoading } = useQuery({
 		queryKey: ["authUser"],
@@ -42,6 +44,7 @@ function App() {
 				<Route path='/network' element={authUser ? <NetworkPage /> : <Navigate to={"/login"} />} />
 				<Route path='/catalogue' element={authUser ? <CataloguePage /> : <Navigate to={"/login"} />} />
 				<Route path='/twinmodel' element={authUser ? <MarineEcosystemSimulation /> : <Navigate to={"/login"} />} />
+				<Route path='/objectdetection' element={authUser ? <ObjectDetection /> : <Navigate to={"/login"} />} />
 				<Route path='/post/:postId' element={authUser ? <PostPage /> : <Navigate to={"/login"} />} />
 				<Route path='/profile/:username' element={authUser ? <ProfilePage /> : <Navigate to={"/login"} />} />
 			</Routes>

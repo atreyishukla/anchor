@@ -73,7 +73,7 @@ const MarineEcosystemSimulation = () => {
   };
 
   const calculateCoralHealth = (temp, waveHeight, currentSpeed) => {
-    let health = 100;
+    let health = 60;
     const optimalTemp = 26;
     const bleachingThreshold = 30;
 
@@ -96,7 +96,7 @@ const MarineEcosystemSimulation = () => {
   };
 
   const calculateFishAbundance = (coralHealth, currentSpeed) => {
-    let abundance = 100;
+    let abundance = 60;
 
     if (coralHealth < 75) {
       abundance = 100 * Math.pow(coralHealth / 75, 1.5);
@@ -123,7 +123,7 @@ const MarineEcosystemSimulation = () => {
 
   return (
     <div className=" p-8 text-info font-primary min-h-screen">
-      <h1 className="text-4xl text-primary text-center mb-10 font-bold">Marine Ecosystem Digital Twin</h1>
+      <h1 className="text-4xl text-info text-center mb-10 font-bold">Marine Ecosystem Digital Twin</h1>
       <div className="container mx-auto grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         
         {/* Live Readings */}
@@ -170,7 +170,7 @@ const MarineEcosystemSimulation = () => {
         {/* Ecosystem Health Indicators */}
         <div className="card bg-accent rounded-lg shadow-lg p-5">
           <h2 className="text-xl text-primary font-semibold mb-4">Ecosystem Health Indicators</h2>
-          <Line className="text-info" data={chartData} options={{ responsive: true, scales: { y: { min: 0, max: 100 }}}} />
+          <Line data={chartData} options={{ responsive: true, scales: { y: { min: 0, max: 100 }}}} />
         </div>
       </div>
     </div>
