@@ -52,7 +52,7 @@ const CreatureCard = ({ creature }) => {
           <h2 className="text-info text-2xl font-bold mb-4">
             Danger<br />Level
           </h2>
-          <div className="flex text-2xl">
+          <div className="text-primary flex text-2xl">
             {'★'.repeat(dangerLevel)}{'☆'.repeat(5 - dangerLevel)}
           </div>
         </div>
