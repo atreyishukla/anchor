@@ -42,54 +42,54 @@ const CreatureCatalogue = () => {
         <p className="text-lg mt-2">remember safety comes first</p>
       </header>
 
-      {creatures.map((creature) => (
-        <div
-          key={creature.id}
-          className="grid gap-4 mb-10 max-w-4xl mx-auto p-4 bg-accent rounded-lg lg:grid-cols-6 lg:grid-rows-5 lg:h-96"
-        >
-          {/* Image */}
-          <div
-            className="lg:col-span-4 lg:row-span-4 bg-cover bg-center rounded-lg"
-            style={{
-              backgroundImage: `url(${creature.image})`,
-            }}
-          ></div>
+      <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
+        {creatures.map((creature) => (
+          <div key={creature.id} className="bg-accent rounded-lg p-6 shadow-lg">
+            {/* Image */}
+            <div
+              className="bg-cover bg-center rounded-lg h-40 mb-4"
+              style={{
+                backgroundImage: `url(${creature.image})`,
+              }}
+            ></div>
 
-          {/* Description */}
-          <div className="lg:col-span-2 lg:row-span-4 bg-accent p-4 rounded-lg text-left text-info text-base">
-            <p>{creature.description}</p>
-          </div>
+            {/* Creature Info */}
+            <h2 className="text-xl font-bold text-info mb-2">{creature.name}</h2>
+            <p className="text-sm mb-4">{creature.description}</p>
 
-          {/* Danger Level */}
-          <div className="lg:col-span-2 lg:row-span-1">
-            <h2 className="text-2xl font-bold text-gray-900">Danger Level</h2>
-            <p className="text-xl mt-2">
-              {[...Array(5)].map((_, i) => (
-                <span key={i} className={i < creature.dangerLevel ? "text-yellow-500" : "text-gray-400"}>
-                  ★
-                </span>
-              ))}
-            </p>
-          </div>
-
-          {/* Last Seen */}
-          <div className="lg:col-span-2 lg:row-span-1">
-            <h2 className="text-2xl font-bold text-info">Last Seen</h2>
-            <p className="mt-2 text-lg">{creature.lastSeen}</p>
-            <p className="mt-1 text-lg">{creature.location}</p>
-          </div>
-
-          {/* Primary Locations */}
-          <div className="lg:col-span-2 lg:row-span-1">
-            <h2 className="text-2xl font-bold text-info">Primary Locations</h2>
-            {creature.primaryLocations.map((location, index) => (
-              <p key={index} className="mt-1 text-lg">
-                {location}
+            {/* Danger Level */}
+            <div className="bg-gray-800 p-4 rounded-lg mb-4">
+              <h3 className="text-lg font-bold text-info">Danger Level</h3>
+              <p className="text-lg mt-2">
+                {[...Array(5)].map((_, i) => (
+                  <span key={i} className={i < creature.dangerLevel ? "text-primary-500" : "text-gray-400"}>
+                    ★
+                  </span>
+                ))}
               </p>
-            ))}
+            </div>
+
+            {/* Last Seen */}
+            <div className="bg-gray-800 p-4 rounded-lg mb-4">
+              <h3 className="text-lg font-bold text-info">Last Seen</h3>
+              <p className="text-sm mt-2">{creature.lastSeen}</p>
+              <p className="text-sm">{creature.location}</p>
+            </div>
+
+            {/* Primary Locations */}
+            <div className="bg-gray-800 p-4 rounded-lg">
+              <h3 className="text-lg font-bold text-info">Primary Locations</h3>
+              <ul className="list-disc list-inside mt-2">
+                {creature.primaryLocations.map((location, index) => (
+                  <li key={index} className="text-sm">
+                    {location}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
