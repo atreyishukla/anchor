@@ -12,7 +12,7 @@ import NotificationsPage from "./pages/NotificationsPage";
 import NetworkPage from "./pages/NetworkPage";
 import PostPage from "./pages/PostPage";
 import ProfilePage from "./pages/ProfilePage";
-import BentoGrid from "./pages/CataloguePage";
+import CataloguePage from "./pages/CataloguePage";
 
 function App() {
 	const { data: authUser, isLoading } = useQuery({

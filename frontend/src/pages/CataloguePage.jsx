@@ -82,7 +82,7 @@ const CreatureCard = ({ creature }) => {
   );
 };
 
-const BentoGrid = () => {
+const CataloguePage = () => {
   return (
     <div className="min-h-screen bg-secondary p-8">
       {/* Map through creatures */}
@@ -93,4 +93,4 @@ const BentoGrid = () => {
   );
 };
 
-export default BentoGrid;
+export default CataloguePage;
