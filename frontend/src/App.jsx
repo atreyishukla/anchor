@@ -13,7 +13,7 @@ import NetworkPage from "./pages/NetworkPage";
 import PostPage from "./pages/PostPage";
 import ProfilePage from "./pages/ProfilePage";
 import CataloguePage from "./pages/CataloguePage";
-
+import MarineEcosystemSimulation from "./pages/TwinModel"
 function App() {
 	const { data: authUser, isLoading } = useQuery({
 		queryKey: ["authUser"],
@@ -41,6 +41,7 @@ function App() {
 				<Route path='/notifications' element={authUser ? <NotificationsPage /> : <Navigate to={"/login"} />} />
 				<Route path='/network' element={authUser ? <NetworkPage /> : <Navigate to={"/login"} />} />
 				<Route path='/catalogue' element={authUser ? <CataloguePage /> : <Navigate to={"/login"} />} />
+				<Route path='/twinmodel' element={authUser ? <MarineEcosystemSimulation /> : <Navigate to={"/login"} />} />
 				<Route path='/post/:postId' element={authUser ? <PostPage /> : <Navigate to={"/login"} />} />
 				<Route path='/profile/:username' element={authUser ? <ProfilePage /> : <Navigate to={"/login"} />} />
 			</Routes>

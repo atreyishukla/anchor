@@ -75,7 +75,7 @@ const Navbar = () => {
                 <Link to={`/catalogue`} className="text-neutral flex flex-col items-center">
                   <Album color={iconColor} size={20} />
                 </Link>
-                <Link to="https://arnavvashisthcodingaccountnew.github.io/TwinModel/" >
+                <Link to={`/twinmodel`} >
                   <Microscope color={iconColor} size={20} />
                 </Link>
                 <button
