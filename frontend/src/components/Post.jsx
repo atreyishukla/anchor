@@ -62,50 +62,54 @@ const Post = ({ post }) => {
 			await axiosInstance.post(`/posts/${post._id}/comments/${commentId}/${action}`);
 		},
 		onMutate: async ({ commentId, action }) => {
-			// Snapshot the previous state
-			const previousComments = comments;
-	
-			// Optimistically update the comment state
+			// Optimistically update comment state
 			setComments((prevComments) =>
 				prevComments.map((comment) => {
 					if (comment._id !== commentId) return comment;
 	
-					// Clone the comment and adjust like/dislike counts based on the action
 					const updatedComment = { ...comment };
-					
 					if (action === "like") {
-						// Increase likes and ensure dislikes is not increased
-						updatedComment.likes += 1;
-						if (updatedComment.userHasDisliked) {
-							updatedComment.dislikes -= 1;
-							updatedComment.userHasDisliked = false;
-						}
-						updatedComment.userHasLiked = true;
-					} else if (action === "dislike") {
-						// Increase dislikes and ensure likes is not increased
-						updatedComment.dislikes += 1;
 						if (updatedComment.userHasLiked) {
+							// If already liked, remove the like
 							updatedComment.likes -= 1;
 							updatedComment.userHasLiked = false;
+						} else {
+							// Otherwise, add like and remove dislike if it exists
+							updatedComment.likes += 1;
+							updatedComment.userHasLiked = true;
+							if (updatedComment.userHasDisliked) {
+								updatedComment.dislikes -= 1;
+								updatedComment.userHasDisliked = false;
+							}
 						}
-						updatedComment.userHasDisliked = true;
+					} else if (action === "dislike") {
+						if (updatedComment.userHasDisliked) {
+							// If already disliked, remove the dislike
+							updatedComment.dislikes -= 1;
+							updatedComment.userHasDisliked = false;
+						} else {
+							// Otherwise, add dislike and remove like if it exists
+							updatedComment.dislikes += 1;
+							updatedComment.userHasDisliked = true;
+							if (updatedComment.userHasLiked) {
+								updatedComment.likes -= 1;
+								updatedComment.userHasLiked = false;
+							}
+						}
 					}
-	
 					return updatedComment;
 				})
 			);
-	
-			return { previousComments };
-		},
-		onError: (error, variables, context) => {
-			// Revert to previous state if the mutation fails
-			setComments(context.previousComments);
-			toast.error("Failed to update review");
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["posts"] });
 			queryClient.invalidateQueries({ queryKey: ["comments"] });
 			toast.success("Voted successfully!");
+		},
+		onError: (error, variables, context) => {
+			// Rollback on error
+			setComments(context.previousComments);
+			toast.error("Failed to update review");
 		},
 		onSettled: () => {
 			queryClient.invalidateQueries({ queryKey: ["posts"] });
@@ -199,36 +203,36 @@ const Post = ({ post }) => {
 			{showComments && (
 				<div className="px-4 pb-4">
 					<div className="mb-4 max-h-60 overflow-y-auto">
-						{comments.map((comment) => (
-							<div key={comment._id} className="mb-2 bg-base-100 p-2 rounded flex items-start">
-								<img
-									src={comment.user.profilePicture || "/avatar.png"}
-									alt={comment.user.name}
-									className="w-8 h-8 rounded-full mr-2 flex-shrink-0"
-								/>
-								<div className="flex-grow">
-									<div className="flex items-center mb-1">
-										<span className="font-semibold mr-2">{comment.user.name}</span>
-										<span className="text-xs text-info">
-											{formatDistanceToNow(new Date(comment.createdAt))}
-										</span>
-									</div>
-									<p>{comment.content}</p>
-									<div className="flex">
-										<PostAction
-											icon={<ThumbsUp size={18} className={isLiked ? "text-blue-500  fill-blue-300" : ""}/>}
-											text={`(${comment.likes})`}
-											onClick={() => handleVoteOnComment(comment._id, "like")}
-										/>
-										<PostAction
-											icon={<ThumbsDown size={18} className={isLiked ? "text-red-500  fill-red-300" : ""}/>}
-											text={`(${comment.dislikes})`}
-											onClick={() => handleVoteOnComment(comment._id, "dislike")}
-										/>
-									</div>
+					{comments.map((comment) => (
+						<div key={comment._id} className="mb-2 bg-base-100 p-2 rounded flex items-start">
+							<img
+								src={comment.user.profilePicture || "/avatar.png"}
+								alt={comment.user.name}
+								className="w-8 h-8 rounded-full mr-2 flex-shrink-0"
+							/>
+							<div className="flex-grow">
+								<div className="flex items-center mb-1">
+									<span className="font-semibold mr-2">{comment.user.name}</span>
+									<span className="text-xs text-info">
+										{formatDistanceToNow(new Date(comment.createdAt))}
+									</span>
+								</div>
+								<p>{comment.content}</p>
+								<div className="flex">
+									<PostAction
+										icon={<ThumbsUp size={18} className={comment.userHasLiked ? "text-blue-500 fill-blue-300" : ""} />}
+										text={`(${comment.likes})`}
+										onClick={() => handleVoteOnComment(comment._id, "like")}
+									/>
+									<PostAction
+										icon={<ThumbsDown size={18} className={comment.userHasDisliked ? "text-red-500 fill-red-300" : ""} />}
+										text={`(${comment.dislikes})`}
+										onClick={() => handleVoteOnComment(comment._id, "dislike")}
+									/>
 								</div>
 							</div>
-						))}
+						</div>
+					))}
 					</div>
 
 					<form onSubmit={handleAddComment} className="flex items-center">
