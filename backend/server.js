@@ -9,8 +9,8 @@ import connectionRoutes from "./routes/connection.route.js";
 import {connectDB} from "./lib/db.js"
 import cookieParser from "cookie-parser";
 import path from "path"
+import Stripe from "stripe";
 dotenv.config();
-
 const app=express();
 const PORT = process.env.PORT || 5003;
 const __dirname = path.resolve();
