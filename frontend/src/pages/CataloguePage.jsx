@@ -55,9 +55,9 @@ const CreatureCard = ({ creature }) => {
             className="w-full h-full object-cover opacity-90 rounded-md"
           />
           <div className="absolute bottom-6 left-6">
-            <h1 className="text-Tcolor text-4xl font-bold">
+            <h1 className="text-white text-4xl font-bold">
               The<br />
-              <span className="text-Tcolor">{name}</span>
+              <span className="text-white">{name}</span>
             </h1>
           </div>
         </div>
@@ -113,7 +113,7 @@ const CataloguePage = () => {
     <div className="min-h-screen bg-base-100 p-8">
       {/* Map through creatures */}
       {creatures.map(creature => (
-        <CreatureCard key={creature.id} creature={creature} className="mb-6"/>
+        <CreatureCard key={creature.id} creature={creature} className="mb-10"/>
       ))}
     </div>
   );
