@@ -23,14 +23,14 @@ const MarineEcosystemSimulation = () => {
         data: [100],
         borderColor: '#00897b',
         backgroundColor: 'rgba(0, 137, 123, 0.1)',
-        fill: true
+        fill: 'origin'
       },
       {
         label: 'Fish Abundance (%)',
         data: [100],
         borderColor: '#1565c0',
         backgroundColor: 'rgba(21, 101, 192, 0.1)',
-        fill: true
+        fill: 'origin'
       }
     ]
   });
@@ -122,14 +122,14 @@ const MarineEcosystemSimulation = () => {
   }, []);
 
   return (
-    <div className="bg-[#e9f5f9] p-8 text-gray-900 font-sans min-h-screen">
-      <h1 className="text-4xl text-blue-700 text-center mb-10">Marine Ecosystem Digital Twin</h1>
+    <div className="bg-secondary p-8 text-info font-primary min-h-screen">
+      <h1 className="text-4xl text-primary text-center mb-10">Marine Ecosystem Digital Twin</h1>
       <div className="container mx-auto grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         
         {/* Live Readings */}
-        <div className="card bg-white rounded-lg shadow-lg p-5">
-          <h2 className="text-xl text-blue-800 font-semibold mb-4">Live Readings</h2>
-          <div className="bg-blue-50 p-4 rounded-md border-l-4 border-blue-700">
+        <div className="card bg-accent rounded-lg shadow-lg p-5">
+          <h2 className="text-xl text-primary font-semibold mb-4">Live Readings</h2>
+          <div className="bg-secondary p-4 rounded-md border-l-4 border-primary">
             <div className="flex justify-between my-2">
               <span>Temperature:</span>
               <span>{liveData.temperature}</span>
@@ -146,8 +146,8 @@ const MarineEcosystemSimulation = () => {
         </div>
         
         {/* Simulation Parameters */}
-        <div className="card bg-white rounded-lg shadow-lg p-5">
-          <h2 className="text-xl text-blue-800 font-semibold mb-4">Simulation Parameters</h2>
+        <div className="card bg-accent rounded-lg shadow-lg p-5">
+          <h2 className="text-xl text-primary font-semibold mb-4">Simulation Parameters</h2>
           <div>
             {["temperature", "waveHeight", "currentSpeed"].map((param, idx) => (
               <div key={idx} className="my-4">
@@ -168,8 +168,8 @@ const MarineEcosystemSimulation = () => {
         </div>
         
         {/* Ecosystem Health Indicators */}
-        <div className="card bg-white rounded-lg shadow-lg p-5">
-          <h2 className="text-xl text-blue-800 font-semibold mb-4">Ecosystem Health Indicators</h2>
+        <div className="card bg-accent rounded-lg shadow-lg p-5">
+          <h2 className="text-xl text-primary font-semibold mb-4">Ecosystem Health Indicators</h2>
           <Line data={chartData} options={{ responsive: true, scales: { y: { min: 0, max: 100 }}}} />
         </div>
       </div>
