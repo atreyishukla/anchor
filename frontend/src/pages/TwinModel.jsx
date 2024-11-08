@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-
+import { Filler } from 'chart.js/auto';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const MarineEcosystemSimulation = () => {
@@ -23,14 +23,14 @@ const MarineEcosystemSimulation = () => {
         data: [100],
         borderColor: '#00897b',
         backgroundColor: 'rgba(0, 137, 123, 0.1)',
-        fill: 'origin'
+        fill: true
       },
       {
         label: 'Fish Abundance (%)',
         data: [100],
         borderColor: '#1565c0',
         backgroundColor: 'rgba(21, 101, 192, 0.1)',
-        fill: 'origin'
+        fill: true
       }
     ]
   });
