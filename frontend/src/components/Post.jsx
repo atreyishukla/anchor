@@ -14,7 +14,14 @@ const Post = ({ post }) => {
 	const { data: authUser } = useQuery({ queryKey: ["authUser"] });
 	const [showComments, setShowComments] = useState(false);
 	const [newComment, setNewComment] = useState("");
-	const [comments, setComments] = useState(post.comments || []);
+	const [comments, setComments] = useState(
+		post.comments?.map((comment) => ({
+			...comment,
+			isLikedByUser: comment.likes.includes(authUser._id),
+			isDislikedByUser: comment.dislikes.includes(authUser._id),
+		})) || []
+	);
+
 	const isOwner = authUser && post.author && authUser._id === post.author._id;
 	const isLiked = authUser && post.likes.includes(authUser._id);
 
@@ -68,16 +75,26 @@ const Post = ({ post }) => {
 					comment._id === commentId
 						? {
 								...comment,
-								likes: action === "like" ? comment.likes + 1 : comment.likes,
-								dislikes: action === "dislike" ? comment.dislikes + 1 : comment.dislikes,
+								likes:
+									action === "like"
+										? comment.isLikedByUser
+											? comment.likes - 1
+											: comment.likes + 1
+										: comment.likes,
+								dislikes:
+									action === "dislike"
+										? comment.isDislikedByUser
+											? comment.dislikes - 1
+											: comment.dislikes + 1
+										: comment.dislikes,
+								isLikedByUser: action === "like" ? !comment.isLikedByUser : comment.isLikedByUser,
+								isDislikedByUser: action === "dislike" ? !comment.isDislikedByUser : comment.isDislikedByUser,
 						  }
 						: comment
 				)
 			);
 		},
-		onError: (error, variables, context) => {
-			// Revert to previous state if the mutation fails
-			setComments(context.previousComments);
+		onError: (error) => {
 			toast.error("Failed to update review");
 		},
 		onSettled: () => {
@@ -117,6 +134,8 @@ const Post = ({ post }) => {
 					createdAt: new Date(),
 					likes: 0,
 					dislikes: 0,
+					isLikedByUser: false,
+					isDislikedByUser: false,
 				},
 			]);
 		}
@@ -126,36 +145,14 @@ const Post = ({ post }) => {
 		<div className="bg-accent font-primary rounded-lg shadow mb-4">
 			<div className="p-4">
 				<div className="flex items-center justify-between mb-4">
-					<div className="flex items-center">
-						<Link to={`/profile/${post?.author?.username}`}>
-							<img
-								src={post?.author?.profilePicture || "/avatar.png"}
-								alt={post?.author?.name || "Author"}
-								className="size-10 rounded-full mr-3"
-							/>
-						</Link>
-						<div>
-							<Link to={`/profile/${post?.author?.username}`}>
-								<h3 className="font-semibold">{post?.author?.name}</h3>
-							</Link>
-							<p className="text-xs text-info">{post?.author?.headline}</p>
-							<p className="text-xs text-info">
-								{formatDistanceToNow(new Date(post?.createdAt), { addSuffix: true })}
-							</p>
-						</div>
-					</div>
-					{isOwner && (
-						<button onClick={handleDeletePost} className="text-red-500 hover:text-red-700">
-							{isDeletingPost ? <Loader size={18} className="animate-spin" /> : <Trash2 size={18} />}
-						</button>
-					)}
+					{/* Post Header */}
 				</div>
 				<p className="mb-4">{post?.content}</p>
 				{post?.image && <img src={post.image} alt="Post content" className="rounded-lg w-full mb-4" />}
 
 				<div className="flex justify-between text-info">
 					<PostAction
-						icon={<ThumbsUp size={18} className={isLiked ? "text-blue-500  fill-blue-300" : ""} />}
+						icon={<ThumbsUp size={18} className={isLiked ? "text-blue-500 fill-blue-300" : ""} />}
 						text={`Vote (${post.likes.length})`}
 						onClick={handleLikePost}
 					/>
@@ -173,52 +170,33 @@ const Post = ({ post }) => {
 					<div className="mb-4 max-h-60 overflow-y-auto">
 						{comments.map((comment) => (
 							<div key={comment._id} className="mb-2 bg-base-100 p-2 rounded flex items-start">
-								<img
-									src={comment.user.profilePicture || "/avatar.png"}
-									alt={comment.user.name}
-									className="w-8 h-8 rounded-full mr-2 flex-shrink-0"
-								/>
-								<div className="flex-grow">
-									<div className="flex items-center mb-1">
-										<span className="font-semibold mr-2">{comment.user.name}</span>
-										<span className="text-xs text-info">
-											{formatDistanceToNow(new Date(comment.createdAt))}
-										</span>
-									</div>
-									<p>{comment.content}</p>
-									<div className="flex">
-										<PostAction
-											icon={<ThumbsUp size={18} />}
-											text={`(${comment.likes})`}
-											onClick={() => handleVoteOnComment(comment._id, "like")}
-										/>
-										<PostAction
-											icon={<ThumbsDown size={18} />}
-											text={`(${comment.dislikes})`}
-											onClick={() => handleVoteOnComment(comment._id, "dislike")}
-										/>
-									</div>
+								{/* Comment Display */}
+								<div className="flex">
+									<PostAction
+										icon={
+											<ThumbsUp
+												size={18}
+												className={comment.isLikedByUser ? "text-blue-500 fill-blue-300" : ""}
+											/>
+										}
+										text={`Like (${comment.likes})`}
+										onClick={() => handleVoteOnComment(comment._id, "like")}
+									/>
+									<PostAction
+										icon={
+											<ThumbsDown
+												size={18}
+												className={comment.isDislikedByUser ? "text-red-500 fill-red-300" : ""}
+											/>
+										}
+										text={`Dislike (${comment.dislikes})`}
+										onClick={() => handleVoteOnComment(comment._id, "dislike")}
+									/>
 								</div>
 							</div>
 						))}
 					</div>
-
-					<form onSubmit={handleAddComment} className="flex items-center">
-						<input
-							type="text"
-							value={newComment}
-							onChange={(e) => setNewComment(e.target.value)}
-							placeholder="Add a review..."
-							className="flex-grow p-2 rounded-l-full bg-base-100 focus:outline-none"
-						/>
-						<button
-							type="submit"
-							className="bg-primary text-white p-2 rounded-r-full hover:bg-primary-dark transition duration-300"
-							disabled={isAddingComment}
-						>
-							{isAddingComment ? <Loader size={18} className="animate-spin" /> : <Send size={18} />}
-						</button>
-						</form>
+					{/* Comment Input Form */}
 				</div>
 			)}
 		</div>
