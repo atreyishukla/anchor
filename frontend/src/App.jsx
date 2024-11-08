@@ -30,6 +30,7 @@ function App() {
 			}
 		},
 	});
+	
 	if (isLoading) return null;
 	return (
 		<Layout>
@@ -49,4 +50,5 @@ function App() {
 		</Layout>
 	);
 }
+
 export default App
