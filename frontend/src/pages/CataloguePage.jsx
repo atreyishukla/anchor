@@ -5,7 +5,7 @@ const creatures = [
   {
     id: 1,
     name: "SeaCrawler",
-    image: "monster.png",
+    image: "monster.jpg",
     description: "In the neon-drenched alleys of Navi Mumbai, a terror stalks the night. The Nightcrawler, once a brilliant hacker, is now a chilling victim of cyberpsychosis. His augmented mind twists reality, and his chrome limbs lash out in a desperate war against his own fractured perception. A twisted cyborg, its humanity fractured by cyberpsychosis. Wracked by glitches and hallucinations, the Nightcrawler hunts through the shadows, its augmented senses blurring the line between reality and a nightmare world.",
     dangerLevel: 4,
     lastSeen: {
@@ -14,7 +14,30 @@ const creatures = [
     },
     primaryLocations: ["Bandra", "Panvel", "Thane"]
   },
-  // Add more creatures here as needed
+  {
+    id: 2,
+    name: "Kraken",
+    image: "monster1.jpg",
+    description: "In the neon-drenched alleys of Navi Mumbai, a terror stalks the night. The Nightcrawler, once a brilliant hacker, is now a chilling victim of cyberpsychosis. His augmented mind twists reality, and his chrome limbs lash out in a desperate war against his own fractured perception. A twisted cyborg, its humanity fractured by cyberpsychosis. Wracked by glitches and hallucinations, the Nightcrawler hunts through the shadows, its augmented senses blurring the line between reality and a nightmare world.",
+    dangerLevel: 3,
+    lastSeen: {
+      time: "01:30AM IST",
+      location: "Near Panvel, on route to Mumbai-Pune highway"
+    },
+    primaryLocations: ["Bandra", "Panvel", "Thane"]
+  },
+  {
+    id: 3,
+    name: "Ghoul",
+    image: "monster2.jpg",
+    description: "In the neon-drenched alleys of Navi Mumbai, a terror stalks the night. The Nightcrawler, once a brilliant hacker, is now a chilling victim of cyberpsychosis. His augmented mind twists reality, and his chrome limbs lash out in a desperate war against his own fractured perception. A twisted cyborg, its humanity fractured by cyberpsychosis. Wracked by glitches and hallucinations, the Nightcrawler hunts through the shadows, its augmented senses blurring the line between reality and a nightmare world.",
+    dangerLevel: 4,
+    lastSeen: {
+      time: "01:30AM IST",
+      location: "Near Panvel, on route to Mumbai-Pune highway"
+    },
+    primaryLocations: ["Bandra", "Panvel", "Thane"]
+  },
 ];
 
 const CreatureCard = ({ creature }) => {
