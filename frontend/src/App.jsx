@@ -15,8 +15,6 @@ import ProfilePage from "./pages/ProfilePage";
 import CataloguePage from "./pages/CataloguePage";
 import MarineEcosystemSimulation from "./pages/TwinModel"
 import ObjectDetection from './pages/ObjectDetection';
-import {Elements} from '@stripe/react-stripe-js';
-import {loadStripe} from '@stripe/stripe-js';
 function App() {
 	const { data: authUser, isLoading } = useQuery({
 		queryKey: ["authUser"],
@@ -32,7 +30,7 @@ function App() {
 			}
 		},
 	});
-
+	
 	if (isLoading) return null;
 	return (
 		<Layout>
