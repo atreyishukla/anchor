@@ -4,7 +4,7 @@ import React from 'react';
 const creatures = [
   {
     id: 1,
-    name: "NightCrawler",
+    name: "SeaCrawler",
     image: "avatar.png",
     description: "In the neon-drenched alleys of Navi Mumbai, a terror stalks the night. The Nightcrawler, once a brilliant hacker, is now a chilling victim of cyberpsychosis. His augmented mind twists reality, and his chrome limbs lash out in a desperate war against his own fractured perception. A twisted cyborg, its humanity fractured by cyberpsychosis. Wracked by glitches and hallucinations, the Nightcrawler hunts through the shadows, its augmented senses blurring the line between reality and a nightmare world.",
     dangerLevel: 4,
