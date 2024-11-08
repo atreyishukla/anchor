@@ -122,8 +122,8 @@ const MarineEcosystemSimulation = () => {
   }, []);
 
   return (
-    <div className="bg-secondary p-8 text-info font-primary min-h-screen">
-      <h1 className="text-4xl text-primary text-center mb-10">Marine Ecosystem Digital Twin</h1>
+    <div className=" p-8 text-info font-primary min-h-screen">
+      <h1 className="text-4xl text-primary text-center mb-10 font-bold">Marine Ecosystem Digital Twin</h1>
       <div className="container mx-auto grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         
         {/* Live Readings */}
@@ -170,7 +170,7 @@ const MarineEcosystemSimulation = () => {
         {/* Ecosystem Health Indicators */}
         <div className="card bg-accent rounded-lg shadow-lg p-5">
           <h2 className="text-xl text-primary font-semibold mb-4">Ecosystem Health Indicators</h2>
-          <Line data={chartData} options={{ responsive: true, scales: { y: { min: 0, max: 100 }}}} />
+          <Line className="text-info" data={chartData} options={{ responsive: true, scales: { y: { min: 0, max: 100 }}}} />
         </div>
       </div>
     </div>
