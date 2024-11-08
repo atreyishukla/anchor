@@ -66,38 +66,43 @@ const Post = ({ post }) => {
 			setComments((prevComments) =>
 				prevComments.map((comment) => {
 					if (comment._id !== commentId) return comment;
-	
 					const updatedComment = { ...comment };
+					// Ensure likes and dislikes are numbers
+					updatedComment.likes = Number(updatedComment.likes) || 0;
+					updatedComment.dislikes = Number(updatedComment.dislikes) || 0;
+
 					if (action === "like") {
 						if (updatedComment.userHasLiked) {
 							// If already liked, remove the like
-							updatedComment.likes -= 1;
+							updatedComment.likes = Math.max(0, updatedComment.likes - 1);
 							updatedComment.userHasLiked = false;
 						} else {
 							// Otherwise, add like and remove dislike if it exists
 							updatedComment.likes += 1;
 							updatedComment.userHasLiked = true;
 							if (updatedComment.userHasDisliked) {
-								updatedComment.dislikes -= 1;
+								updatedComment.dislikes = Math.max(0, updatedComment.dislikes - 1);
 								updatedComment.userHasDisliked = false;
 							}
 						}
 					} else if (action === "dislike") {
 						if (updatedComment.userHasDisliked) {
 							// If already disliked, remove the dislike
-							updatedComment.dislikes -= 1;
+							updatedComment.dislikes = Math.max(0, updatedComment.dislikes - 1);
 							updatedComment.userHasDisliked = false;
 						} else {
 							// Otherwise, add dislike and remove like if it exists
 							updatedComment.dislikes += 1;
 							updatedComment.userHasDisliked = true;
 							if (updatedComment.userHasLiked) {
-								updatedComment.likes -= 1;
+								updatedComment.likes = Math.max(0, updatedComment.likes - 1);
 								updatedComment.userHasLiked = false;
 							}
 						}
 					}
+
 					return updatedComment;
+
 				})
 			);
 		},
