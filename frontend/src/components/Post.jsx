@@ -62,28 +62,56 @@ const Post = ({ post }) => {
 			await axiosInstance.post(`/posts/${post._id}/comments/${commentId}/${action}`);
 		},
 		onMutate: async ({ commentId, action }) => {
-			// Optimistically update comment state
+			// Snapshot the previous state
+			const previousComments = comments;
+	
+			// Optimistically update the comment state
 			setComments((prevComments) =>
-				prevComments.map((comment) =>
-					comment._id === commentId
-						? {
-								...comment,
-								likes: action === "like" ? comment.likes + 1 : comment.likes,
-								dislikes: action === "dislike" ? comment.dislikes + 1 : comment.dislikes,
-						  }
-						: comment
-				)
+				prevComments.map((comment) => {
+					if (comment._id !== commentId) return comment;
+	
+					// Clone the comment and adjust like/dislike counts based on the action
+					const updatedComment = { ...comment };
+					
+					if (action === "like") {
+						// Increase likes and ensure dislikes is not increased
+						updatedComment.likes += 1;
+						if (updatedComment.userHasDisliked) {
+							updatedComment.dislikes -= 1;
+							updatedComment.userHasDisliked = false;
+						}
+						updatedComment.userHasLiked = true;
+					} else if (action === "dislike") {
+						// Increase dislikes and ensure likes is not increased
+						updatedComment.dislikes += 1;
+						if (updatedComment.userHasLiked) {
+							updatedComment.likes -= 1;
+							updatedComment.userHasLiked = false;
+						}
+						updatedComment.userHasDisliked = true;
+					}
+	
+					return updatedComment;
+				})
 			);
+	
+			return { previousComments };
 		},
 		onError: (error, variables, context) => {
 			// Revert to previous state if the mutation fails
 			setComments(context.previousComments);
 			toast.error("Failed to update review");
 		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["posts"] });
+			queryClient.invalidateQueries({ queryKey: ["comments"] });
+			toast.success("Voted successfully!");
+		},
 		onSettled: () => {
 			queryClient.invalidateQueries({ queryKey: ["posts"] });
 		},
 	});
+	
 
 	const handleDeletePost = () => {
 		if (!window.confirm("Are you sure you want to delete this post?")) return;
