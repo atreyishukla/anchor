@@ -15,7 +15,6 @@ import ProfilePage from "./pages/ProfilePage";
 import CataloguePage from "./pages/CataloguePage";
 import MarineEcosystemSimulation from "./pages/TwinModel"
 import ObjectDetection from './pages/ObjectDetection';
-
 function App() {
 	const { data: authUser, isLoading } = useQuery({
 		queryKey: ["authUser"],
@@ -31,9 +30,7 @@ function App() {
 			}
 		},
 	});
-
 	if (isLoading) return null;
-
 	return (
 		<Layout>
 			<Routes>
@@ -52,5 +49,4 @@ function App() {
 		</Layout>
 	);
 }
-
 export default App
