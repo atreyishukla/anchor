@@ -3,7 +3,7 @@ import { useState } from "react";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { Link, useParams } from "react-router-dom";
-import { Loader, MessageCircle, Send, Share2, ThumbsUp, Trash2 } from "lucide-react";
+import { Loader, MessageCircle, Send, Share2, ThumbsUp, Trash2, ThumbsDown } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import PostAction from "./PostAction";
 
@@ -59,6 +59,21 @@ const Post = ({ post }) => {
 			toast.success("Voted successfully!");
 		},
 	});
+	const { mutate: voteOnComment, isPending: isVotingOnComment } = useMutation({
+		mutationFn: async ({ action }) => {
+			// action should be either "like" or "dislike"
+			await axiosInstance.post(`/posts/${post._id}/comments/${comment._id}/${action}`);
+		},
+		onSuccess: (data, variables) => {
+			queryClient.invalidateQueries({ queryKey: ["posts"] });
+			queryClient.invalidateQueries({ queryKey: ["post", post._id] });
+			
+			// Display appropriate success message
+			const action = variables.action === "like" ? "Liked" : "Disliked";
+			toast.success(`${action} the comment successfully!`);
+		},
+	});
+	
 
 	const handleDeletePost = () => {
 		if (!window.confirm("Are you sure you want to delete this post?")) return;
@@ -69,6 +84,12 @@ const Post = ({ post }) => {
 		if (isLikingPost) return;
 		likePost();
 	};
+	const handleVoteOnComment = async (action) => {
+		if (isVotingOnComment) return; // Prevent multiple clicks while a vote is processing
+		voteOnComment({ action }); // Pass the action ("like" or "dislike") to the mutation
+	};
+	
+
 
 	const handleAddComment = async (e) => {
 		e.preventDefault();
@@ -157,6 +178,24 @@ const Post = ({ post }) => {
 									</div>
 									<p>{comment.content}</p>
 								</div>
+								<PostAction
+								icon={
+								<ThumbsUp
+								size={18}
+								className={isLiked ? "text-blue-500 fill-blue-300" : ""}/>}
+								text={`Like (${post.likes.length})`}
+								onClick={() => handleVoteOnComment("like")} // Pass "like" as the action
+								/>
+
+								<PostAction
+								icon={
+								<ThumbsDown
+								size={18}
+								className={isDisliked ? "text-red-500 fill-red-300" : ""}/>}
+								text={`Dislike (${post.dislikes.length})`}
+								onClick={() => handleVoteOnComment("dislike")} // Pass "dislike" as the action
+								/>
+
 							</div>
 						))}
 					</div>

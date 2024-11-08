@@ -167,3 +167,50 @@ export const likePost = async (req, res) => {
 		res.status(500).json({ message: "Server error" });
 	}
 };
+
+
+export const voteOnComment = async (req, res) => {
+	try {
+		const { postId, commentId, action } = req.params;
+		const userId = req.user._id;
+
+		const post = await Post.findById(postId);
+		if (!post) return res.status(404).json({ message: "Post not found" });
+
+		const comment = post.comments.find((comment) => comment._id.toString() === commentId);
+		if (!comment) return res.status(404).json({ message: "Comment not found" });
+
+		// Toggle like/dislike based on the action
+		if (action === "like") {
+			if (comment.likes.includes(userId)) {
+				// Unlike the comment
+				comment.likes = comment.likes.filter((id) => id.toString() !== userId.toString());
+			} else {
+				// Like the comment
+				comment.likes.push(userId);
+				// Remove from dislikes if user had previously disliked
+				comment.dislikes = comment.dislikes.filter((id) => id.toString() !== userId.toString());
+			}
+		} else if (action === "dislike") {
+			if (comment.dislikes.includes(userId)) {
+				// Remove dislike
+				comment.dislikes = comment.dislikes.filter((id) => id.toString() !== userId.toString());
+			} else {
+				// Dislike the comment
+				comment.dislikes.push(userId);
+				// Remove from likes if user had previously liked
+				comment.likes = comment.likes.filter((id) => id.toString() !== userId.toString());
+			}
+		} else {
+			return res.status(400).json({ message: "Invalid action" });
+		}
+
+		// Save the updated post with the modified comment
+		await post.save();
+
+		res.status(200).json({ comment, postId });
+	} catch (error) {
+		console.error("Error in voteOnComment controller:", error);
+		res.status(500).json({ message: "Server error" });
+	}
+};
