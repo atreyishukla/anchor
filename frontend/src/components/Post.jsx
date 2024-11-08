@@ -34,8 +34,7 @@ const Post = ({ post }) => {
 
 	const { mutate: createComment, isPending: isAddingComment } = useMutation({
 		mutationFn: async (newComment) => {
-		   await axiosInstance.post(`/posts/${post._id}/comment`, { content: newComment });
-			
+			await axiosInstance.post(`/posts/${post._id}/comment`, { content: newComment });
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["posts"] });
@@ -47,7 +46,6 @@ const Post = ({ post }) => {
 			console.error("Review addition error:", errorMessage);
 		},
 	});
-	
 
 	const { mutate: likePost, isPending: isLikingPost } = useMutation({
 		mutationFn: async () => {
@@ -59,21 +57,18 @@ const Post = ({ post }) => {
 			toast.success("Voted successfully!");
 		},
 	});
+
 	const { mutate: voteOnComment, isPending: isVotingOnComment } = useMutation({
-		mutationFn: async ({ action }) => {
-			// action should be either "like" or "dislike"
-			await axiosInstance.post(`/posts/${post._id}/comments/${comment._id}/${action}`);
+		mutationFn: async ({ commentId, action }) => {
+			await axiosInstance.post(`/posts/${post._id}/comments/${commentId}/${action}`);
 		},
 		onSuccess: (data, variables) => {
 			queryClient.invalidateQueries({ queryKey: ["posts"] });
 			queryClient.invalidateQueries({ queryKey: ["post", post._id] });
-			
-			// Display appropriate success message
 			const action = variables.action === "like" ? "Liked" : "Disliked";
 			toast.success(`${action} the comment successfully!`);
 		},
 	});
-	
 
 	const handleDeletePost = () => {
 		if (!window.confirm("Are you sure you want to delete this post?")) return;
@@ -84,12 +79,11 @@ const Post = ({ post }) => {
 		if (isLikingPost) return;
 		likePost();
 	};
-	const handleVoteOnComment = async (action) => {
-		if (isVotingOnComment) return; // Prevent multiple clicks while a vote is processing
-		voteOnComment({ action }); // Pass the action ("like" or "dislike") to the mutation
-	};
-	
 
+	const handleVoteOnComment = async (commentId, action) => {
+		if (isVotingOnComment) return;
+		voteOnComment({ commentId, action });
+	};
 
 	const handleAddComment = async (e) => {
 		e.preventDefault();
@@ -106,6 +100,8 @@ const Post = ({ post }) => {
 						profilePicture: authUser.profilePicture,
 					},
 					createdAt: new Date(),
+					likes: [],
+					dislikes: [],
 				},
 			]);
 		}
@@ -146,13 +142,13 @@ const Post = ({ post }) => {
 				<div className="flex justify-between text-info">
 					<PostAction
 						icon={<ThumbsUp size={18} className={isLiked ? "text-blue-500  fill-blue-300" : ""} />}
-						text={`Vote (${post.likes.length})`}
+						text={`Like (${post.likes.length})`}
 						onClick={handleLikePost}
 					/>
 
 					<PostAction
 						icon={<MessageCircle size={18} />}
-						text={`Review (${comments.length})`}
+						text={`Comments (${comments.length})`}
 						onClick={() => setShowComments(!showComments)}
 					/>
 					<PostAction icon={<Share2 size={18} />} text="Share" />
@@ -162,42 +158,39 @@ const Post = ({ post }) => {
 			{showComments && (
 				<div className="px-4 pb-4">
 					<div className="mb-4 max-h-60 overflow-y-auto">
-						{comments.map((comment) => (
-							<div key={comment._id} className="mb-2 bg-base-100 p-2 rounded flex items-start">
-								<img
-									src={comment.user.profilePicture || "/avatar.png"}
-									alt={comment.user.name}
-									className="w-8 h-8 rounded-full mr-2 flex-shrink-0"
-								/>
-								<div className="flex-grow">
-									<div className="flex items-center mb-1">
-										<span className="font-semibold mr-2">{comment.user.name}</span>
-										<span className="text-xs text-info">
-											{formatDistanceToNow(new Date(comment.createdAt))}
-										</span>
+						{comments.map((comment) => {
+							const isCommentLiked = comment.likes.includes(authUser._id);
+							const isCommentDisliked = comment.dislikes.includes(authUser._id);
+							
+							return (
+								<div key={comment._id} className="mb-2 bg-base-100 p-2 rounded flex items-start">
+									<img
+										src={comment.user.profilePicture || "/avatar.png"}
+										alt={comment.user.name}
+										className="w-8 h-8 rounded-full mr-2 flex-shrink-0"
+									/>
+									<div className="flex-grow">
+										<div className="flex items-center mb-1">
+											<span className="font-semibold mr-2">{comment.user.name}</span>
+											<span className="text-xs text-info">
+												{formatDistanceToNow(new Date(comment.createdAt))}
+											</span>
+										</div>
+										<p>{comment.content}</p>
 									</div>
-									<p>{comment.content}</p>
+									<PostAction
+										icon={<ThumbsUp size={18} className={isCommentLiked ? "text-blue-500 fill-blue-300" : ""} />}
+										text={`Like (${comment.likes.length})`}
+										onClick={() => handleVoteOnComment(comment._id, "like")}
+									/>
+									<PostAction
+										icon={<ThumbsDown size={18} className={isCommentDisliked ? "text-red-500 fill-red-300" : ""} />}
+										text={`Dislike (${comment.dislikes.length})`}
+										onClick={() => handleVoteOnComment(comment._id, "dislike")}
+									/>
 								</div>
-								<PostAction
-								icon={
-								<ThumbsUp
-								size={18}
-								className={isLiked ? "text-blue-500 fill-blue-300" : ""}/>}
-								text={`Like (${post.likes.length})`}
-								onClick={() => handleVoteOnComment("like")} // Pass "like" as the action
-								/>
-
-								<PostAction
-								icon={
-								<ThumbsDown
-								size={18}
-								className={isDisliked ? "text-red-500 fill-red-300" : ""}/>}
-								text={`Dislike (${post.dislikes.length})`}
-								onClick={() => handleVoteOnComment("dislike")} // Pass "dislike" as the action
-								/>
-
-							</div>
-						))}
+							);
+						})}
 					</div>
 
 					<form onSubmit={handleAddComment} className="flex items-center">
@@ -223,4 +216,4 @@ const Post = ({ post }) => {
 	);
 };
 
-export default Post;
+export default Post
