@@ -216,13 +216,13 @@ const Post = ({ post }) => {
 									<p>{comment.content}</p>
 									<div className="flex">
 										<PostAction
-											icon={<ThumbsUp size={18} />}
-											text={`Like (${comment.likes})`}
+											icon={<ThumbsUp size={18} className={isLiked ? "text-blue-500  fill-blue-300" : ""}/>}
+											text={`(${comment.likes})`}
 											onClick={() => handleVoteOnComment(comment._id, "like")}
 										/>
 										<PostAction
-											icon={<ThumbsDown size={18} />}
-											text={`Dislike (${comment.dislikes})`}
+											icon={<ThumbsDown size={18} className={isLiked ? "text-red-500  fill-red-300" : ""}/>}
+											text={`(${comment.dislikes})`}
 											onClick={() => handleVoteOnComment(comment._id, "dislike")}
 										/>
 									</div>
