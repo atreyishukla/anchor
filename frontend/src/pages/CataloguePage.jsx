@@ -41,6 +41,9 @@ const CreatureCard = ({ creature }) => {
 
         {/* Right side - Description */}
         <div className="bg-accent rounded-2xl p-6 text-info">
+        <h2 className="text-primary text-2xl font-bold mb-4">
+            Description
+          </h2>
           <p className="text-sm leading-relaxed">{description}</p>
         </div>
       </div>
