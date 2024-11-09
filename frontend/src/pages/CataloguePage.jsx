@@ -110,7 +110,7 @@ const CreatureCard = ({ creature }) => {
 
 const CataloguePage = () => {
   return (
-    <div className="min-h-screen bg-base-100 p-8">
+    <div className="min-h-screen bg-base-100 p-20">
       {/* Map through creatures */}
       {creatures.map(creature => (
         <CreatureCard key={creature.id} creature={creature} className="mb-40"/>
