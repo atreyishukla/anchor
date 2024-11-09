@@ -6,7 +6,7 @@ const creatures = [
     id: 1,
     name: "SeaCrawler",
     image: "monster.jpg",
-    description: "In the neon-drenched alleys of Navi Mumbai, a terror stalks the night. The Nightcrawler, once a brilliant hacker, is now a chilling victim of cyberpsychosis. His augmented mind twists reality, and his chrome limbs lash out in a desperate war against his own fractured perception. A twisted cyborg, its humanity fractured by cyberpsychosis. Wracked by glitches and hallucinations, the Nightcrawler hunts through the shadows, its augmented senses blurring the line between reality and a nightmare world.",
+    description: "With spiked limbs and a tough, armored shell, the SeaCrawler scuttles across the ocean floor, scavenging and defending its domain. Its keen sense for detecting underwater vibrations makes it a relentless tracker and a formidable opponent for any who disturb its habitat.",
     dangerLevel: 4,
     lastSeen: {
       time: "03:30AM PST",
@@ -18,7 +18,7 @@ const creatures = [
     id: 2,
     name: "Kraken",
     image: "monster1.jpg",
-    description: "In the neon-drenched alleys of Navi Mumbai, a terror stalks the night. The Nightcrawler, once a brilliant hacker, is now a chilling victim of cyberpsychosis. His augmented mind twists reality, and his chrome limbs lash out in a desperate war against his own fractured perception. A twisted cyborg, its humanity fractured by cyberpsychosis. Wracked by glitches and hallucinations, the Nightcrawler hunts through the shadows, its augmented senses blurring the line between reality and a nightmare world.",
+    description: "A massive, serpent-like creature lurking in the deep, Krake has powerful tentacles and an ancient, almost mystical intelligence. Known for its immense size and camouflage abilities, it can crush entire vessels, instilling fear in those who venture too close to its territory.",
     dangerLevel: 3,
     lastSeen: {
       time: "02:30PM PST",
@@ -30,7 +30,7 @@ const creatures = [
     id: 3,
     name: "Ghoul",
     image: "monster2 .jpg",
-    description: "In the neon-drenched alleys of Navi Mumbai, a terror stalks the night. The Nightcrawler, once a brilliant hacker, is now a chilling victim of cyberpsychosis. His augmented mind twists reality, and his chrome limbs lash out in a desperate war against his own fractured perception. A twisted cyborg, its humanity fractured by cyberpsychosis. Wracked by glitches and hallucinations, the Nightcrawler hunts through the shadows, its augmented senses blurring the line between reality and a nightmare world.",
+    description: "A ghostly, spectral entity haunting the seabed, The Ghoul drifts silently, shrouded in a mist-like aura. It preys on the fears of nearby creatures, causing disorientation and hallucinations, and is rumored to be the remnant of a lost soul trapped beneath the waves.",
     dangerLevel: 5,
     lastSeen: {
       time: "01:30AM PST",
