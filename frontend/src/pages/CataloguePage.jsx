@@ -10,7 +10,7 @@ const creatures = [
     dangerLevel: 4,
     lastSeen: {
       time: "03:30AM PST",
-      location: "Near Point Nemo, in the Paficic Ocean"
+      location: "Near Point Nemo, in the Pacific Ocean"
     },
     weaknesses: ["Bright Light", "Ultrasonic Sound", "CW"]
   },
@@ -22,33 +22,33 @@ const creatures = [
     dangerLevel: 3,
     lastSeen: {
       time: "02:30PM PST",
-      location: "Near Point Nemo, in the Paficic Ocean"
+      location: "Near Point Nemo, in the Pacific Ocean"
     },
     weaknesses: ["Bright Light", "Ultrasonic Sound", "CW"]
   },
   {
     id: 3,
     name: "Ghoul",
-    image: "monster2 .jpg",
+    image: "monster2.jpg",
     description: "In the neon-drenched alleys of Navi Mumbai, a terror stalks the night. The Nightcrawler, once a brilliant hacker, is now a chilling victim of cyberpsychosis. His augmented mind twists reality, and his chrome limbs lash out in a desperate war against his own fractured perception. A twisted cyborg, its humanity fractured by cyberpsychosis. Wracked by glitches and hallucinations, the Nightcrawler hunts through the shadows, its augmented senses blurring the line between reality and a nightmare world.",
     dangerLevel: 5,
     lastSeen: {
       time: "01:30AM PST",
-      location: "Near Point Nemo, in the Paficic Ocean"
+      location: "Near Point Nemo, in the Pacific Ocean"
     },
     weaknesses: ["Bright Light", "Ultrasonic Sound", "CW"]
   },
 ];
 
 const CreatureCard = ({ creature }) => {
-  const { name, image, description, dangerLevel, lastSeen, primaryLocations } = creature;
+  const { name, image, description, dangerLevel, lastSeen, weaknesses } = creature;
 
   return (
-    <div className="font-priamry max-w-6xl mx-auto space-y-4">
+    <div className="font-primary max-w-6xl mx-auto space-y-4">
       {/* Top section with image and description */}
       <div className="grid grid-cols-2 gap-4">
         {/* Left side - Image and title */}
-        <div className="relative ounded-2xl overflow-hidden">
+        <div className="relative rounded-2xl overflow-hidden">
           <img
             src={image}
             alt={name}
@@ -64,7 +64,7 @@ const CreatureCard = ({ creature }) => {
 
         {/* Right side - Description */}
         <div className="bg-accent rounded-2xl p-6 text-info">
-        <h2 className="text-primary text-2xl font-bold mb-4">
+          <h2 className="text-primary text-2xl font-bold mb-4">
             Description
           </h2>
           <p className="text-sm leading-relaxed">{description}</p>
@@ -85,21 +85,21 @@ const CreatureCard = ({ creature }) => {
 
         {/* Last Seen */}
         <div className="bg-accent rounded-2xl p-6">
-          <h2 className="text-2xl  text-primary font-bold mb-4">
+          <h2 className="text-2xl text-primary font-bold mb-4">
             Last<br />Seen
           </h2>
           <p className="font-bold text-info">{lastSeen.time}</p>
           <p className="mt-2 text-sm text-info">{lastSeen.location}</p>
         </div>
 
-        {/* Primary Locations */}
+        {/* Weaknesses */}
         <div className="bg-accent rounded-2xl p-6">
           <h2 className="text-2xl text-primary font-bold mb-4">
             Weakness
           </h2>
           <ul className="space-y-1 text-info">
-            {primaryLocations.map((weaknesses, index) => (
-              <li key={index}>{weaknesses}</li>
+            {weaknesses.map((weakness, index) => (
+              <li key={index}>{weakness}</li>
             ))}
           </ul>
         </div>
@@ -110,13 +110,12 @@ const CreatureCard = ({ creature }) => {
 
 const CataloguePage = () => {
   return (
-    <div className="min-h-screen bg-base-100 p-20">
+    <div className="min-h-screen bg-base-100 p-96">
       {/* Map through creatures */}
       {creatures.map(creature => (
-        <CreatureCard key={creature.id} creature={creature} className="mb-96"/>
+        <CreatureCard key={creature.id} creature={creature} />
       ))}
     </div>
-    
   );
 };
 
