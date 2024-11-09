@@ -95,11 +95,11 @@ const CreatureCard = ({ creature }) => {
         {/* Primary Locations */}
         <div className="bg-accent rounded-2xl p-6">
           <h2 className="text-2xl text-primary font-bold mb-4">
-            Primary<br />Locations
+            Weakness
           </h2>
           <ul className="space-y-1 text-info">
-            {primaryLocations.map((location, index) => (
-              <li key={index}>{location}</li>
+            {primaryLocations.map((weaknesses, index) => (
+              <li key={index}>{weaknesses}</li>
             ))}
           </ul>
         </div>
