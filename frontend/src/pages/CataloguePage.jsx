@@ -103,6 +103,12 @@ const CreatureCard = ({ creature }) => {
             ))}
           </ul>
         </div>
+        <br>
+        </br>
+        <br></br>
+        <br>
+        </br>
+        <br></br>
       </div>
     </div>
   );
