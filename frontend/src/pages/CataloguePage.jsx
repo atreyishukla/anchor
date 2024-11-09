@@ -29,7 +29,7 @@ const creatures = [
   {
     id: 3,
     name: "Ghoul",
-    image: "monster2.jpg",
+    image: "monster2 .jpg",
     description: "In the neon-drenched alleys of Navi Mumbai, a terror stalks the night. The Nightcrawler, once a brilliant hacker, is now a chilling victim of cyberpsychosis. His augmented mind twists reality, and his chrome limbs lash out in a desperate war against his own fractured perception. A twisted cyborg, its humanity fractured by cyberpsychosis. Wracked by glitches and hallucinations, the Nightcrawler hunts through the shadows, its augmented senses blurring the line between reality and a nightmare world.",
     dangerLevel: 5,
     lastSeen: {
@@ -110,10 +110,10 @@ const CreatureCard = ({ creature }) => {
 
 const CataloguePage = () => {
   return (
-    <div className="min-h-screen bg-base-100 p-96">
+    <div className="min-h-screen bg-base-100">
       {/* Map through creatures */}
       {creatures.map(creature => (
-        <CreatureCard key={creature.id} creature={creature} />
+        <CreatureCard key={creature.id} creature={creature} className="p-96" />
       ))}
     </div>
   );
