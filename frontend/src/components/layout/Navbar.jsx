@@ -81,9 +81,6 @@ const Navbar = () => {
                 <Link to={`/twinmodel`} >
                   <Microscope color={iconColor} size={20} />
                 </Link>
-                <Link to={`https://anchor-audio-rooms.vercel.app/`} >
-                  <Podcast color={iconColor} size={20} />
-                </Link>
                 <Link to={`/objectdetection`} >
                   <Video color={iconColor} size={20} />
                 </Link>
